@@ -1,6 +1,8 @@
 import hashlib
 import requests
 import datetime
+import itertools
+from marshmallow import Schema, fields, post_load
 
 
 class ApiError(Exception):
@@ -11,6 +13,41 @@ class ApiError(Exception):
 class AuthenticationError(ApiError):
     def __init__(self, *args, **kwargs):
         Exception.__init__(self, *args, **kwargs)
+
+
+class Comic():
+    def __init__(self, title):
+        self.title = title
+
+
+class ComicSchema(Schema):
+    title = fields.Str()
+
+    @post_load
+    def make_comic(self, data):
+        return Comic(**data)
+
+
+class ComicsList():
+    comics = []
+
+    def __init__(self, response):
+        for comic_dict in response['data']['results']:
+            result = ComicSchema().load(comic_dict)
+            if len(result.errors) > 0:
+                raise ApiError(result.errors)
+
+            self.comics.append(result.data)
+
+    def __iter__(self):
+        return iter(self.comics)
+
+    def __getitem__(self, index):
+        try:
+            return next(itertools.islice(self.comics, index, index+1))
+        except TypeError:
+            return list(itertools.islice(
+                self.comics, index.start, index.stop, index.step))
 
 
 class Session():
@@ -41,7 +78,7 @@ class Session():
         return response
 
     def comics(self, params):
-        return self._call('comics', params)
+        return ComicsList(self._call('comics', params))
 
 
 def api(public_key=None, private_key=None):

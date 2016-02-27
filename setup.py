@@ -11,6 +11,6 @@ setup(
     author_email='robert@rkuykendall.com',
     url='http://github.com/rkuykendall/marvelous',
     packages=find_packages(),
-    install_requires=['requests'],
+    install_requires=['requests', 'marshmallow'],
     zip_safe=True,
     )
