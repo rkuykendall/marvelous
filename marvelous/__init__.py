@@ -2,7 +2,7 @@ import hashlib
 import requests
 import datetime
 import itertools
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, post_load, pre_load
 
 
 class ApiError(Exception):
@@ -15,16 +15,63 @@ class AuthenticationError(ApiError):
         Exception.__init__(self, *args, **kwargs)
 
 
+class Series():
+    def __init__(self, _id, resource_uri):
+        self.id = _id
+        self.resource_uri = resource_uri
+
+
+class SeriesSchema(Schema):
+    _id = fields.Int()
+    resourceURI = fields.Str(attribute='resource_uri')
+
+    @pre_load
+    def process_input(self, data):
+        data['_id'] = data['resourceURI'].split('/')[-1]
+        return data
+
+    @post_load
+    def make(self, data):
+        return Series(**data)
+
+
+class Dates():
+    def __init__(self, on_sale, foc):
+        self.on_sale = on_sale
+        self.foc = foc
+
+
+class DatesSchema(Schema):
+    onsaleDate = fields.Date(attribute='on_sale')
+    focDate = fields.Date(attribute='foc')
+
+    @pre_load
+    def process_input(self, data):
+        new_data = {}
+        for d in data:
+            new_data[d['type']] = d['date']
+
+        return new_data
+
+    @post_load
+    def make(self, data):
+        return Dates(**data)
+
+
 class Comic():
-    def __init__(self, title):
+    def __init__(self, title, dates, series):
         self.title = title
+        self.dates = dates
+        self.series = series
 
 
 class ComicSchema(Schema):
     title = fields.Str()
+    dates = fields.Nested(DatesSchema)
+    series = fields.Nested(SeriesSchema)
 
     @post_load
-    def make_comic(self, data):
+    def make(self, data):
         return Comic(**data)
 
 
