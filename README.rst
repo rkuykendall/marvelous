@@ -3,12 +3,14 @@ marvelous
 
 Marvel API python wrapper.
 
-## Examples
+Examples
+--------
 
 This is a script which can be run at the beginning on the week to generate a
 complete Marvel pull list, excluding any series the user doesn't want.
 
 .. code-block:: python
+
     import os
     import marvelous
     from config import public_key, private_key
