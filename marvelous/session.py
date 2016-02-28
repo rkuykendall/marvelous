@@ -53,7 +53,7 @@ class Session():
 
     def comics(self, params):
         return comics_list.ComicsList(
-            self.session.call(['comics'], params=params))
+            self.call(['comics'], params=params))
 
     def series(self, _id):
         result = series.SeriesSchema().load(self.call(['series', _id]))
