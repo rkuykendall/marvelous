@@ -2,6 +2,11 @@ from setuptools import setup, find_packages
 
 version = '0.0.1'
 
+
+def get_requirements():
+    with open('requirements.txt') as f:
+        return [line for line in f.read().splitlines() if 'nose' not in line]
+
 setup(
     name='marvelous',
     version='0.0.1',
@@ -11,9 +16,6 @@ setup(
     author_email='robert@rkuykendall.com',
     url='http://github.com/rkuykendall/marvelous',
     packages=find_packages(),
-    install_requires=[
-        'requests', 'marshmallow',
-        'https://github.com/reclosedev/requests-cache/tarball/master'
-        '#egg=request-cache-0.4.11beta'],  # Needed until next release > 0.4.10
+    install_requires=get_requirements(),
     zip_safe=True,
     )
