@@ -11,6 +11,9 @@ setup(
     author_email='robert@rkuykendall.com',
     url='http://github.com/rkuykendall/marvelous',
     packages=find_packages(),
-    install_requires=['requests', 'marshmallow'],
+    install_requires=[
+        'requests', 'marshmallow',
+        'https://github.com/reclosedev/requests-cache/tarball/master'
+        '#egg=request-cache-0.4.11beta'],  # Needed until next release > 0.4.10
     zip_safe=True,
     )

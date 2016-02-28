@@ -1,16 +1,19 @@
 import itertools
-from comic import ComicSchema
-from exceptions import ApiError
+
+import comic
+import exceptions
 
 
 class ComicsList():
-    comics = []
-
     def __init__(self, response):
+        self.comics = []
+        self.response = response
+
+        schema = comic.ComicSchema()
         for comic_dict in response['data']['results']:
-            result = ComicSchema().load(comic_dict)
+            result = schema.load(comic_dict)
             if len(result.errors) > 0:
-                raise ApiError(result.errors)
+                raise exceptions.ApiError(result.errors)
 
             self.comics.append(result.data)
 
