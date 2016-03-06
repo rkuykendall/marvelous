@@ -13,6 +13,8 @@ complete Marvel pull list, excluding any series the user doesn't want.
 
     import os
     import marvelous
+
+    # Your own config file to keep your private key local and secret
     from config import public_key, private_key
 
     # All the series IDs of comics I'm not interested in reading
@@ -26,6 +28,7 @@ complete Marvel pull list, excluding any series the user doesn't want.
     m = marvelous.api(public_key, private_key)
 
     # Get all comics from this week, sorted alphabetically by title
+    # Uses the same API parameters as listed in the official API documentation
     pulls = sorted(m.comics({
         'format': "comic",
         'formatType': "comic",
