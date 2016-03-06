@@ -11,7 +11,7 @@ setup(
     name='marvelous',
     version='0.0.1',
     description="Marvel API python wrapper.",
-    long_description=open("README.md", "r").read(),
+    long_description=open("README.rst", "r").read(),
     author='Robert Kuykendall',
     author_email='robert@rkuykendall.com',
     url='http://github.com/rkuykendall/marvelous',
