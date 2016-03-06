@@ -1,10 +1,10 @@
 from setuptools import setup, find_packages
 
-version = '0.0.1'
+version = '0.0.2'
 
 setup(
     name='marvelous',
-    version='0.0.1',
+    version=version,
     description="Marvel API python wrapper.",
     long_description=open("README.rst", "r").read(),
     author='Robert Kuykendall',
