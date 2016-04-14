@@ -24,13 +24,24 @@ class ComicSchema(Schema):
     issn = fields.Str()
     format = fields.Str()
     pageCount = fields.Int(attribute='page_count')
-    dates = fields.Nested(DatesSchema)
+    # textObjects
+    # resourceURI
+    # urls
     series = fields.Nested(SeriesSchema)
+    # variants
+    # collections
+    # collectedIssues
+    dates = fields.Nested(DatesSchema)
+    # prices
+    # thumbnail
+    # images
+    # creators
+    # characters
+    # stories
+    # events
 
     @pre_load
     def process_input(self, data):
-        # print data.keys()
-        # raise hell
         return data
 
     @post_load

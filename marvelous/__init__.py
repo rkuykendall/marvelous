@@ -32,5 +32,4 @@ def api(public_key=None, private_key=None, cache=False):
                 "not yet on pypi. To install the newest requests-cache, run "
                 "`pip install requests-cache`.")
 
-
     return Session(public_key, private_key, cached_requests=cache)

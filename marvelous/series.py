@@ -20,11 +20,10 @@ class SeriesSchema(Schema):
     response = fields.Raw()
     id = fields.Int()
     resourceURI = fields.Str(attribute='resource_uri')
+    name = fields.Str()
 
     @pre_load
     def process_input(self, data):
-        # print data.keys()
-
         if 'status' in data:
             data['data']['results'][0]['response'] = data
             data = data['data']['results'][0]
@@ -34,5 +33,4 @@ class SeriesSchema(Schema):
 
     @post_load
     def make(self, data):
-        # print data.keys()
         return Series(**data)
