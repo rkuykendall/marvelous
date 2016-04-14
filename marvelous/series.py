@@ -4,10 +4,12 @@ import comics_list
 
 
 class Series():
-    def __init__(self, _id, resource_uri, response=None):
-        self.response = response
-        self.id = _id
-        self.resource_uri = resource_uri
+    def __init__(self, **kwargs):
+        if 'response' not in kwargs:
+            kwargs['response'] = None
+
+        for k, v in kwargs.iteritems():
+            setattr(self, k, v)
 
     def comics(self, params):
         return comics_list.ComicsList(
@@ -16,7 +18,7 @@ class Series():
 
 class SeriesSchema(Schema):
     response = fields.Raw()
-    _id = fields.Int()
+    id = fields.Int()
     resourceURI = fields.Str(attribute='resource_uri')
 
     @pre_load
@@ -27,7 +29,7 @@ class SeriesSchema(Schema):
             data['data']['results'][0]['response'] = data
             data = data['data']['results'][0]
 
-        data['_id'] = data['resourceURI'].split('/')[-1]
+        data['id'] = data['resourceURI'].split('/')[-1]
         return data
 
     @post_load

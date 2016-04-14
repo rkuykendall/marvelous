@@ -1,19 +1,37 @@
-from marshmallow import Schema, fields, post_load
+from marshmallow import Schema, fields, pre_load, post_load
 from dates import DatesSchema
 from series import SeriesSchema
 
 
 class Comic():
-    def __init__(self, title, dates, series):
-        self.title = title
-        self.dates = dates
-        self.series = series
+    def __init__(self, **kwargs):
+        for k, v in kwargs.iteritems():
+            setattr(self, k, v)
 
 
 class ComicSchema(Schema):
+    id = fields.Int()
+    digitalId = fields.Int(attribute='digital_id')
     title = fields.Str()
+    issueNumber = fields.Int(attribute='issue_number')
+    variantDescription = fields.Str(attribute='variant_description')
+    description = fields.Str(allow_none=True)
+    modified = fields.DateTime()
+    isbn = fields.Str()
+    up = fields.Str()
+    diamondCode = fields.Str(attribute='diamond_dode')
+    ean = fields.Str()
+    issn = fields.Str()
+    format = fields.Str()
+    pageCount = fields.Int(attribute='page_count')
     dates = fields.Nested(DatesSchema)
     series = fields.Nested(SeriesSchema)
+
+    @pre_load
+    def process_input(self, data):
+        # print data.keys()
+        # raise hell
+        return data
 
     @post_load
     def make(self, data):

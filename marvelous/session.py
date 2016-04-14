@@ -51,7 +51,10 @@ class Session():
 
         return response
 
-    def comics(self, params):
+    def comics(self, params=None):
+        if params is None:
+            params = {}
+
         return comics_list.ComicsList(
             self.call(['comics'], params=params))
 

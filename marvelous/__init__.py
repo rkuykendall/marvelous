@@ -29,9 +29,8 @@ def api(public_key=None, private_key=None, cache=False):
         except:
             raise LibraryError(
                 "Marvelous only supports cache with requests-cache >= 0.4.11, "
-                "not yet on pypi. To install development requests-cache, run "
-                "`pip install git+git://github.com/reclosedev/"
-                "requests-cache.git`.")
+                "not yet on pypi. To install the newest requests-cache, run "
+                "`pip install requests-cache`.")
 
 
     return Session(public_key, private_key, cached_requests=cache)
