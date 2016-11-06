@@ -1,11 +1,11 @@
 from marshmallow import Schema, fields, pre_load, post_load
-from dates import DatesSchema
-from series import SeriesSchema
+
+from . import dates, series
 
 
 class Comic():
     def __init__(self, **kwargs):
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self, k, v)
 
 
@@ -27,11 +27,11 @@ class ComicSchema(Schema):
     # textObjects
     # resourceURI
     # urls
-    series = fields.Nested(SeriesSchema)
+    series = fields.Nested(series.SeriesSchema)
     # variants
     # collections
     # collectedIssues
-    dates = fields.Nested(DatesSchema)
+    dates = fields.Nested(dates.DatesSchema)
     # prices
     # thumbnail
     # images

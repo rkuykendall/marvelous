@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, pre_load, post_load
 
-import comics_list
+from . import comics_list
 
 
 class Series():
@@ -8,7 +8,7 @@ class Series():
         if 'response' not in kwargs:
             kwargs['response'] = None
 
-        for k, v in kwargs.iteritems():
+        for k, v in kwargs.items():
             setattr(self, k, v)
 
     def comics(self, params):

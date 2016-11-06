@@ -1,7 +1,6 @@
 import itertools
 
-import comic
-import exceptions
+from . import comic, exceptions
 
 
 class ComicsList():
