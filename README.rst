@@ -6,6 +6,7 @@ marvelous - Marvel API python wrapper.
 - `Code on Github <https://github.com/rkuykendall/marvelous>`_
 - `Published on PyPi <https://pypi.python.org/pypi/marvelous>`_
 - `Read the project documentation <http://marvelous.readthedocs.io/en/latest/>`_
+- `Marvel API documentation <https://developer.marvel.com/docs>`_
 
 **To install:**
 
