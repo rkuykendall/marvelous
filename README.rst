@@ -1,6 +1,9 @@
 marvelous - Marvel API wrapper for python 3
 ===========================================
 
+.. image:: https://travis-ci.org/rkuykendall/marvelous.svg?branch=master
+    :target: https://travis-ci.org/rkuykendall/marvelous
+
 **Links:**
 
 - `Code on Github <https://github.com/rkuykendall/marvelous>`_
