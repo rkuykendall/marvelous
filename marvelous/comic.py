@@ -19,7 +19,7 @@ class ComicSchema(Schema):
     modified = fields.DateTime()
     isbn = fields.Str()
     up = fields.Str()
-    diamondCode = fields.Str(attribute='diamond_dode')
+    diamondCode = fields.Str(attribute='diamond_code')
     ean = fields.Str()
     issn = fields.Str()
     format = fields.Str()
