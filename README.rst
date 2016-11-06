@@ -1,5 +1,5 @@
-marvelous - Marvel API python wrapper.
-======================================
+marvelous - Marvel API wrapper for python 3
+===========================================
 
 **Links:**
 
