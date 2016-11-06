@@ -10,7 +10,7 @@ class TestComics(unittest.TestCase):
         priv = os.getenv('PRIVATE_KEY', 'priv')
         self.m = marvelous.api(
             public_key=pub, private_key=priv,
-            cache=marvelous.SqliteCache("testing_mock.db"))
+            cache=marvelous.SqliteCache("tests/testing_mock.sqlite"))
 
     def test_pulls_verbose(self):
         week = self.m.comics({
