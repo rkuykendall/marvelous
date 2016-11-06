@@ -34,10 +34,15 @@ class Session():
         url = self.api_url.format('/'.join([str(e) for e in endpoint]))
 
         if self.cache:
-            cached_response = self.cache.get(url)
+            try:
+                cached_response = self.cache.get(url)
 
-            if cached_response:
-                return cached_response
+                if cached_response:
+                    return cached_response
+            except AttributeError as e:
+                raise exceptions.CacheError(
+                    "Cache object passed in is missing attribute: {}".format(
+                        repr(e)))
 
         response = requests.get(url, params=params)
 
@@ -50,7 +55,12 @@ class Session():
             raise exceptions.ApiError(response['message'])
 
         if self.cache and response.status_code == 200:
-            self.cache.store(url, data)
+            try:
+                self.cache.store(url, data)
+            except AttributeError as e:
+                raise exceptions.CacheError(
+                    "Cache object passed in is missing attribute: {}".format(
+                        repr(e)))
 
         return data
 

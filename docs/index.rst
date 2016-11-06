@@ -61,9 +61,42 @@ automate a list of Marvel comics weekly releases without having to copy each
 title manually from the Midtown Comics website.
 
 
+Instantiating API
+-----------------
 
-``Session`` Methods
--------------------
+.. code-block:: python
+
+    import marvelous
+
+    public_key = "Public key from https://developer.marvel.com/account"
+    private_key = "Private key from https://developer.marvel.com/account"
+    print_calls = True  # Will print URL of app API calls, for debugging
+
+    def CacheClass:
+      def get(self, key):
+        # This method should return cahed value with key
+        return None
+
+      def store(self, key, value):
+        # This method should store key value pair
+        return
+
+    cache = CacheClass()
+
+    # m is a session object, read about it below
+    m = marvelous.api(
+      public_key,
+      private_key,
+      print_calls=print_calls,
+      cache=cache
+    )
+
+
+Session Methods
+---------------
+
+The session object returned by ``marvelous.api(public_key, private_key)``
+has the following methods.
 
 m.call(endpoint, params)
 ........................
@@ -157,6 +190,40 @@ Series
 - ``name`` - String
 - ``comics`` - Method, Returns ``ComicsList`` object for `/v1/public/series/{seriesId}/comics`
 
+
+
+Exceptions
+----------
+
+Exceptions can be imported from ``marvelous.exceptions`` and caught:
+
+- ``ApiError``
+- ``AuthenticationError``
+- ``CacheError``
+
+
+
+Caching
+-------
+
+``marvelous.api`` supports an optional cache attribute, which can store API
+responses and significanly improve working with the Marvel API. The cache
+argument must be an object with these two methods:
+
+- ``get(self, key):``
+- ``store(self, key, value):``
+
+Anything else is up to the user. A cache could be implemented as a simple
+attribute in memoru or with the help of a database, redis, an API, files, or
+anything else.
+
+An Sqlite cache class is included with the library and can be imported like so:
+
+.. code-block:: python
+
+    m = marvelous.api(
+        public_key, private_key,
+        cache=marvelous.SqliteCache(db_name="marvelous_cache.db"))
 
 
 Examples
