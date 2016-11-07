@@ -2,7 +2,7 @@ language: python
 python:
 - '3.5'
 install: pip install -r requirements.txt
-script: python -m nose
+script: python3 -m nose --with-coverage
 after_success:
 - cd $TRAVIS_BUILD_DIR
 - bash <(curl -s https://codecov.io/bash)
