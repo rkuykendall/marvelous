@@ -4,7 +4,8 @@ marvelous - Marvel API wrapper for python 3
 .. image:: https://travis-ci.org/rkuykendall/marvelous.svg?branch=master
     :target: https://travis-ci.org/rkuykendall/marvelous
 
-**Links:**
+.. image:: https://codecov.io/gh/rkuykendall/marvelous/branch/master/graph/badge.svg
+  :target: https://codecov.io/gh/rkuykendall/marvelous
 
 - `Code on Github <https://github.com/rkuykendall/marvelous>`_
 - `Published on PyPi <https://pypi.python.org/pypi/marvelous>`_
