@@ -19,6 +19,9 @@ class ComicsList():
     def __iter__(self):
         return iter(self.comics)
 
+    def __len__(self):
+        return len(self.comics)
+
     def __getitem__(self, index):
         try:
             return next(itertools.islice(self.comics, index, index+1))

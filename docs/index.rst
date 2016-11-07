@@ -70,25 +70,24 @@ Instantiating API
 
     public_key = "Public key from https://developer.marvel.com/account"
     private_key = "Private key from https://developer.marvel.com/account"
-    print_calls = True  # Will print URL of app API calls, for debugging
 
-    def CacheClass:
-      def get(self, key):
-        # This method should return cahed value with key
-        return None
+    # Optional
+    class CacheClass:
+        def get(self, key):
+            # This method should return cahed value with key
+            return None
 
-      def store(self, key, value):
-        # This method should store key value pair
-        return
+        def store(self, key, value):
+            # This method should store key value pair
+            return
 
     cache = CacheClass()
 
     # m is a session object, read about it below
     m = marvelous.api(
-      public_key,
-      private_key,
-      print_calls=print_calls,
-      cache=cache
+        public_key,
+        private_key,
+        cache=cache
     )
 
 
@@ -187,7 +186,7 @@ Series
 - ``response`` - Dictionary, raw response body
 - ``id`` - Int
 - ``resource_uri`` - String, `resourceURI` from API
-- ``name`` - String
+- ``title`` - String
 - ``comics`` - Method, Returns ``ComicsList`` object for `/v1/public/series/{seriesId}/comics`
 
 

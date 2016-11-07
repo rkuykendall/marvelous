@@ -8,13 +8,10 @@ from . import exceptions, comics_list, series
 class Session():
     api_url = "http://gateway.marvel.com:80/v1/public/{}"
 
-    def __init__(
-            self, public_key, private_key, cache=None,
-            print_calls=False):
+    def __init__(self, public_key, private_key, cache=None):
 
         self.public_key = public_key
         self.private_key = private_key
-        self.print_calls = print_calls
         self.cache = cache
 
     def call(self, endpoint, params=None):
@@ -46,13 +43,10 @@ class Session():
 
         response = requests.get(url, params=params)
 
-        if self.print_calls:
-            print(response.url)
-
         data = response.json()
 
         if 'message' in data:
-            raise exceptions.ApiError(response['message'])
+            raise exceptions.ApiError(data['message'])
 
         if self.cache and response.status_code == 200:
             try:
