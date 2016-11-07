@@ -1,6 +1,7 @@
+import json
 import os
-import unittest
 import requests_mock
+import unittest
 
 import marvelous
 
@@ -41,6 +42,23 @@ class TestCache(unittest.TestCase):
 
             with self.assertRaises(marvelous.exceptions.CacheError):
                 m.series(466)
+
+    def test_sql_store(self):
+        fresh_cache = marvelous.SqliteCache(":memory:")
+        test_cache = marvelous.SqliteCache("tests/testing_mock.sqlite")
+
+        m = marvelous.api(
+            public_key=self.pub, private_key=self.priv,
+            cache=fresh_cache)
+        url = 'http://gateway.marvel.com:80/v1/public/series/466'
+
+        self.assertTrue(fresh_cache.get(url) is None)
+
+        with requests_mock.Mocker() as r:
+            r.get(url, text=json.dumps(test_cache.get(url)))
+            m.series(466)
+
+        self.assertTrue(fresh_cache.get(url) is not None)
 
 
 if __name__ == '__main__':
