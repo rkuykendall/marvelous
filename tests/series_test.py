@@ -5,7 +5,7 @@ import marvelous
 from marvelous.comics_list import ComicsList
 
 
-class TestComics(unittest.TestCase):
+class TestSeries(unittest.TestCase):
     def setUp(self):
         pub = os.getenv('PUBLIC_KEY', 'pub')
         priv = os.getenv('PRIVATE_KEY', 'priv')

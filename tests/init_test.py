@@ -4,7 +4,7 @@ import marvelous
 from marvelous.exceptions import AuthenticationError
 
 
-class TestComics(unittest.TestCase):
+class TestInit(unittest.TestCase):
     def setUp(self):
         pass
 

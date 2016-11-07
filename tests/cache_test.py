@@ -13,10 +13,10 @@ class NoGet:
 class NoStore:
     def get(self, key):
         # This method should return cahed value with key
-        return None
+        return {}
 
 
-class TestComics(unittest.TestCase):
+class TestCache(unittest.TestCase):
     def setUp(self):
         self.pub = os.getenv('PUBLIC_KEY', 'pub')
         self.priv = os.getenv('PRIVATE_KEY', 'priv')
