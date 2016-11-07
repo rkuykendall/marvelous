@@ -17,7 +17,7 @@ setup(
         ),
         "Topic :: Utilities",
     ],
-    description="Marvel API python wrapper.",
+    description="Marvel API wrapper for python.",
     install_requires=['marshmallow', 'requests'],
     keywords='marvel api comics python',
     long_description=open("README.rst", "r").read(),
