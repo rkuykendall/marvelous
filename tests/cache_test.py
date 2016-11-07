@@ -1,5 +1,6 @@
 import os
 import unittest
+import requests_mock
 
 import marvelous
 
@@ -12,8 +13,7 @@ class NoGet:
 
 class NoStore:
     def get(self, key):
-        # This method should return cahed value with key
-        return {}
+        return None
 
 
 class TestCache(unittest.TestCase):
@@ -34,8 +34,13 @@ class TestCache(unittest.TestCase):
             public_key=self.pub, private_key=self.priv,
             cache=NoStore())
 
-        with self.assertRaises(marvelous.exceptions.CacheError):
-            m.series(466)
+        with requests_mock.Mocker() as r:
+            r.get(
+                'http://gateway.marvel.com:80/v1/public/series/466',
+                text='{"response_code": 200}')
+
+            with self.assertRaises(marvelous.exceptions.CacheError):
+                m.series(466)
 
 
 if __name__ == '__main__':

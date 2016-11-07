@@ -34,7 +34,7 @@ class Session():
             try:
                 cached_response = self.cache.get(url)
 
-                if cached_response:
+                if cached_response is not None:
                     return cached_response
             except AttributeError as e:
                 raise exceptions.CacheError(
