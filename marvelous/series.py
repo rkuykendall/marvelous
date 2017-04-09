@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, pre_load, post_load
 
-from . import comics_list, exceptions
+from . import exceptions
 
 
 class Series:
@@ -12,6 +12,8 @@ class Series:
             setattr(self, k, v)
 
     def comics(self, params=None):
+        from . import comics_list
+
         if params is None:
             params = {}
 

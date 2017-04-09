@@ -1,5 +1,5 @@
 from . import session, exceptions
-from .sqlite_cache import SqliteCache
+from .sqlite_cache import SqliteCache  # NOQA F401 Imported for export
 
 
 def api(public_key=None, private_key=None, cache=None):
