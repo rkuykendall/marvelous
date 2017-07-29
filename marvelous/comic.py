@@ -34,7 +34,7 @@ class ComicSchema(Schema):
     dates = fields.Nested(dates.DatesSchema)
     # prices
     # thumbnail
-    # images
+    images = fields.List(fields.String)
     # creators
     # characters
     # stories
