@@ -3,6 +3,8 @@ import hashlib
 import requests
 import urllib.parse
 
+from collections import OrderedDict
+
 from . import exceptions, comics_list, series
 
 
@@ -20,9 +22,10 @@ class Session():
             params = {}
 
         # Generate part of cache key before hash, apikey and timestamp added
-        cache_params = urllib.parse.urlencode(params)
-        if cache_params == '?':
-            cache_params = ''
+        cache_params = ''
+        if len(params) > 0:
+            orderedParams = OrderedDict(sorted(params.items(), key=lambda t: t[0]))
+            cache_params = '?{}'.format(urllib.parse.urlencode(orderedParams))
 
         now_string = datetime.datetime.now().strftime('%Y-%m-%d%H:%M:%S')
         auth_hash = hashlib.md5()
