@@ -21,6 +21,8 @@ class Session():
 
         # Generate part of cache key before hash, apikey and timestamp added
         cache_params = urllib.parse.urlencode(params)
+        if cache_params == '?':
+            cache_params = ''
 
         now_string = datetime.datetime.now().strftime('%Y-%m-%d%H:%M:%S')
         auth_hash = hashlib.md5()
@@ -33,7 +35,7 @@ class Session():
         params['ts'] = now_string
 
         url = self.api_url.format('/'.join([str(e) for e in endpoint]))
-        cache_key = '{url}?{cache_params}'.format(
+        cache_key = '{url}{cache_params}'.format(
             url=url, cache_params=cache_params)
 
         if self.cache:

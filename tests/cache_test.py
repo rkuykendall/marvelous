@@ -54,11 +54,17 @@ class TestCache(unittest.TestCase):
 
         self.assertTrue(fresh_cache.get(url) is None)
 
-        with requests_mock.Mocker() as r:
-            r.get(url, text=json.dumps(test_cache.get(url)))
-            m.series(466)
+        try:
+            with requests_mock.Mocker() as r:
+                r.get(url, text=json.dumps(test_cache.get(url)))
+                m.series(466)
 
-        self.assertTrue(fresh_cache.get(url) is not None)
+            self.assertTrue(fresh_cache.get(url) is not None)
+        except TypeError:
+            print(
+                'This test will fail after cache db deleted.\n'
+                'It should pass if you now re-run the test suite without deleting the database.')
+            assert(False)
 
 
 if __name__ == '__main__':

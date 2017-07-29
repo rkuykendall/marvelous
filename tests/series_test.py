@@ -18,7 +18,7 @@ class TestSeries(unittest.TestCase):
         self.assertTrue(usms.title == "Ultimate Spider-Man (2000 - 2009)")
         self.assertTrue(usms.id == 466)
         comics = usms.comics()
-        self.assertTrue(comics[0].id == 23931)
+        self.assertTrue(23931 in [c.id for c in comics])
 
         self.assertTrue(len(comics[:5]) == 5)
         self.assertTrue(len(comics) == len([x for x in comics if x.id > 3]))

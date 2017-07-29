@@ -50,7 +50,7 @@ marvelous - Marvel API wrapper for python 3
 Contributing
 ------------
 
-- To run the test suite, run `python -m nose` in the `tests` folder
+- To run the test suite, run `python -m nose` in this folder
 - When running a new test for the first time, set the environment variables
   ``PUBLIC_KEY`` and ``PRIVATE_KEY`` to any Marel API keys. The result will be
   stored in the `tests/testing_mock.sqlite` database without your keys.
