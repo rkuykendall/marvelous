@@ -34,11 +34,7 @@ class ComicSchema(Schema):
     dates = fields.Nested(dates.DatesSchema)
     # prices
     # thumbnail
-<<<<<<< HEAD
-    images = fields.List(fields.String)
-=======
     images = fields.List(fields.Urls)
->>>>>>> a9d916f... Add resourceURI, urls, images, and events to Comic
     # creators
     # characters
     # stories
