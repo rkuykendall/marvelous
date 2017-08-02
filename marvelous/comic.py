@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, pre_load, post_load
 
-from . import dates, series
+from . import dates, series, urls, events
 
 
 class Comic():
@@ -25,8 +25,8 @@ class ComicSchema(Schema):
     format = fields.Str()
     pageCount = fields.Int(attribute='page_count')
     # textObjects
-    # resourceURI
-    # urls
+    resourceURI = fields.Url(attribute='resource_uri')
+    urls = fields.Nested(urls.UrlsSchema)
     series = fields.Nested(series.SeriesSchema)
     # variants
     # collections
@@ -34,11 +34,15 @@ class ComicSchema(Schema):
     dates = fields.Nested(dates.DatesSchema)
     # prices
     # thumbnail
+<<<<<<< HEAD
     images = fields.List(fields.String)
+=======
+    images = fields.List(fields.Urls)
+>>>>>>> a9d916f... Add resourceURI, urls, images, and events to Comic
     # creators
     # characters
     # stories
-    # events
+    events = fields.Nested(events.EventsSchema, many=True)
 
     @pre_load
     def process_input(self, data):
@@ -49,6 +53,15 @@ class ComicSchema(Schema):
         # probably just to ignore it, since I don't know how to fix it.
         if new_data.get('modified', ' ')[0] == '-':
             del new_data['modified']
+
+        if 'events' in new_data:
+            new_data['events'] = new_data['events']['items']
+
+        if 'images' in new_data:
+            new_data['images'] = [
+                '{}.{}'.format(img['path'], img['extension'])
+                for img in new_data['images']
+            ]
 
         return new_data
 
