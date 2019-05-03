@@ -3,6 +3,7 @@ import unittest
 
 import marvelous
 from marvelous.comics_list import ComicsList
+from marvelous.series import Series
 
 
 class TestSeries(unittest.TestCase):
@@ -30,6 +31,19 @@ class TestSeries(unittest.TestCase):
     def test_bad_response_data(self):
         with self.assertRaises(marvelous.exceptions.ApiError):
             ComicsList({'data': {'results': [{'modified': 'potato'}]}})
+
+    def test_all_series(self):
+        # check known values
+        series_single = self.m.series(
+            params={'title':"Ultimate Spider-Man"})  # don't include '(year - year)', it doesn't work
+        series_list = list(series_single)  # unspool the iterator
+        self.assertIsNotNone(series_single)
+        self.assertEqual(1, len(series_list))
+        self.assertIsInstance(series_list[0], Series)
+        # check the iterator works
+        series_iter = self.m.series(params={'type':'ongoing', 'limit':10})
+        for series in series_iter:
+            self.assertIsInstance(series, Series)
 
 if __name__ == '__main__':
     unittest.main()
