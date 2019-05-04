@@ -41,7 +41,7 @@ class TestSeries(unittest.TestCase):
         self.assertEqual(1, len(series_list))
         self.assertIsInstance(series_list[0], Series)
         # check the iterator works
-        series_iter = self.m.series(params={'type':'ongoing', 'limit':10})
+        series_iter = self.m.series(params={'seriesType':'ongoing', 'limit':10})
         for series in series_iter:
             self.assertIsInstance(series, Series)
 
