@@ -1,9 +1,9 @@
 import datetime
 import hashlib
-import requests
 import urllib.parse
-
 from collections import OrderedDict
+
+import requests
 
 from . import exceptions, comics_list, series
 
@@ -76,11 +76,24 @@ class Session():
         return comics_list.ComicsList(
             self.call(['comics'], params=params))
 
-    def series(self, _id):
-        result = series.SeriesSchema().load(self.call(['series', _id]))
-
-        if len(result.errors) > 0:
-            raise exceptions.ApiError(result.errors)
-
-        result.data.session = self
-        return result.data
+    def series(self, _id=None, params=None):
+        result = None
+        if _id:
+            result = series.SeriesSchema().load(self.call(['series', _id]))
+            result.data.session = self
+            if len(result.errors) > 0:
+                raise exceptions.ApiError(result.errors)
+            return result.data
+        elif params:
+            api_call = self.call(['series'], params)
+            if api_call['code'] != 200:
+                raise exceptions.ApiError(api_call['status'])
+            result, errors = series.SeriesSchema().load(
+                api_call.get('data', {}).get('results', []),
+                many=True
+            )
+            if len(errors) > 0:
+                raise exceptions.ApiError(errors)
+            for r in result:
+                r.session = self
+            return result
