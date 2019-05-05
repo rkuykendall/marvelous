@@ -1,9 +1,9 @@
 import datetime
 import hashlib
-import requests
 import urllib.parse
-
 from collections import OrderedDict
+
+import requests
 
 from . import exceptions, comics_list, series
 
@@ -85,8 +85,11 @@ class Session():
                 raise exceptions.ApiError(result.errors)
             return result.data
         elif params:
+            api_call = self.call(['series'], params)
+            if api_call['code'] != 200:
+                raise exceptions.ApiError(api_call['status'])
             result, errors = series.SeriesSchema().load(
-                self.call(['series'], params).get('data', {}).get('results',[]),
+                api_call.get('data', {}).get('results', []),
                 many=True
             )
             if len(errors) > 0:
