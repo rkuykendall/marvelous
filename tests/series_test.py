@@ -27,6 +27,8 @@ class TestSeries(unittest.TestCase):
     def test_bad_series(self):
         with self.assertRaises(marvelous.exceptions.ApiError):
             self.m.series(-1)
+        with self.assertRaises(marvelous.exceptions.ApiError):
+            self.m.series(params={'bad':'filter'})
 
     def test_bad_response_data(self):
         with self.assertRaises(marvelous.exceptions.ApiError):
