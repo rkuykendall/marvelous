@@ -31,7 +31,6 @@ class SeriesSchema(Schema):
     startYear = fields.Int(allow_none=True)
     endYear = fields.Int(allow_none=True)
     rating = fields.Str(allow_none=True)
-    modified =  fields.DateTime('%Y-%m-%dT%H:%M:%S%z')
 
     @pre_load
     def process_input(self, data):
