@@ -31,5 +31,12 @@ class TestSeries(unittest.TestCase):
         with self.assertRaises(marvelous.exceptions.ApiError):
             ComicsList({'data': {'results': [{'modified': 'potato'}]}})
 
+    def test_pulls_verbose(self):
+        series = self.m.series_list({
+            'orderBy': 'modified',
+        })
+
+        self.assertGreater(len(series.series), 0)
+
 if __name__ == '__main__':
     unittest.main()
