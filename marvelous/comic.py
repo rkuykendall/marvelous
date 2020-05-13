@@ -65,6 +65,9 @@ class ComicSchema(Schema):
         if 'isbn' in new_data:
             new_data['isbn'] = str(new_data['isbn'])
 
+        if 'diamondCode' in new_data:
+            new_data['diamondCode'] = str(new_data['diamondCode'])
+
         return new_data
 
     @post_load
