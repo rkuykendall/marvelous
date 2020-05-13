@@ -44,7 +44,7 @@ class TestComics(unittest.TestCase):
         self.assertEqual(murpg.isbn, '785110283')
 
     def test_invalid_diamond_code(self):
-        """Sometimes Marvel API sends number for isbn"""
+        """Sometimes Marvel API sends number for diamond code"""
         hulk = self.m.comics({'id': 27399}).comics[0]
         self.assertEqual(hulk.diamond_code, '0')
 
