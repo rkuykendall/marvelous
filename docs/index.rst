@@ -126,6 +126,13 @@ m.series(series_id)
 Calls the `/v1/public/series/{seriesId}` endpoint with the first
 argument and returns a `Series` object.
 
+m.series_list(params=None)
+.....................
+
+Calls the `/v1/public/series` endpoint with any params passed in and
+returns a `SeriesList` object. For documentation on `SeriesList`, see below. For
+documentation on all the params argument, see the
+`Marvel API documentation <https://developer.marvel.com/docs#!/public/getSeriesCollection_get_25>`_
 
 
 Objects
@@ -189,6 +196,12 @@ Series
 - ``title`` - String
 - ``comics`` - Method, Returns ``ComicsList`` object for `/v1/public/series/{seriesId}/comics`
 
+
+SeriesList
+..........
+
+- ``series`` - List, ``Series`` objects
+- ``response`` - Dictionary, raw response body
 
 
 Exceptions

@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 from marshmallow import ValidationError
 
-from . import exceptions, comics_list, series
+from . import exceptions, comics_list, series, series_list
 
 
 class Session():
@@ -86,3 +86,10 @@ class Session():
 
         result.session = self
         return result
+
+    def series_list(self, params=None):
+        if params is None:
+            params = {}
+
+        return series_list.SeriesList(
+            self.call(['series'], params=params))
