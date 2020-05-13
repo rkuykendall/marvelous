@@ -1,21 +1,25 @@
-from marshmallow import Schema, fields, pre_load, post_load
+from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
 
 class Events():
-    def __init__(self, id=None, name=None):
+    def __init__(self, id=None, name=None, **kwargs):
         self.id = id
         self.name = name
+        self.unknown = kwargs
 
 
 class EventsSchema(Schema):
     id = fields.Str()
     name = fields.Str()
 
+    class Meta:
+        unknown = INCLUDE
+
     @pre_load
-    def process_input(self, data):
+    def process_input(self, data, **kwargs):
         data['id'] = data['resourceURI'].split('/')[-1]
         return data
 
     @post_load
-    def make(self, data):
+    def make(self, data, **kwargs):
         return Events(**data)

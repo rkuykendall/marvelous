@@ -1,20 +1,24 @@
-from marshmallow import Schema, fields, pre_load, post_load
+from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
 
 class Dates():
-    def __init__(self, on_sale=None, foc=None, unlimited=None):
+    def __init__(self, on_sale=None, foc=None, unlimited=None, **kwargs):
         self.on_sale = on_sale
         self.foc = foc
         self.unlimited = unlimited
+        self.unknown = kwargs
 
 
 class DatesSchema(Schema):
-    onsaleDate = fields.Date(attribute='on_sale')
-    focDate = fields.Date(attribute='foc')
-    unlimitedDate = fields.Date(attribute='unlimited')
+    onsaleDate = fields.DateTime(attribute='on_sale')
+    focDate = fields.DateTime(attribute='foc')
+    unlimitedDate = fields.DateTime(attribute='unlimited')
+
+    class Meta:
+        unknown = INCLUDE
 
     @pre_load
-    def process_input(self, data):
+    def process_input(self, data, **kwargs):
         new_data = {}
         for d in data:
             # Marvel comic 4373, and maybe others, returns a focDate of
@@ -26,5 +30,5 @@ class DatesSchema(Schema):
         return new_data
 
     @post_load
-    def make(self, data):
+    def make(self, data, **kwargs):
         return Dates(**data)

@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, pre_load, post_load
+from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
 from . import dates, series, urls, events
 
@@ -40,8 +40,11 @@ class ComicSchema(Schema):
     # stories
     events = fields.Nested(events.EventsSchema, many=True)
 
+    class Meta:
+        unknown = INCLUDE
+
     @pre_load
-    def process_input(self, data):
+    def process_input(self, data, **kwargs):
         new_data = data
 
         # Marvel comic 1768, and maybe others, returns a modified of
@@ -62,5 +65,5 @@ class ComicSchema(Schema):
         return new_data
 
     @post_load
-    def make(self, data):
+    def make(self, data, **kwargs):
         return Comic(**data)

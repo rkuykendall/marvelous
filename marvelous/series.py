@@ -1,4 +1,4 @@
-from marshmallow import Schema, fields, pre_load, post_load
+from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
 from . import exceptions
 
@@ -9,6 +9,8 @@ class Series:
             kwargs['response'] = None
 
         for k, v in kwargs.items():
+            if k == "comics":
+                continue
             setattr(self, k, v)
 
     def comics(self, params=None):
@@ -27,8 +29,11 @@ class SeriesSchema(Schema):
     resourceURI = fields.Str(attribute='resource_uri')
     title = fields.Str()
 
+    class Meta:
+        unknown = INCLUDE
+
     @pre_load
-    def process_input(self, data):
+    def process_input(self, data, **kwargs):
         if data.get('code', 200) != 200:
             raise exceptions.ApiError(data.get('status'))
 
@@ -40,5 +45,5 @@ class SeriesSchema(Schema):
         return data
 
     @post_load
-    def make(self, data):
+    def make(self, data, **kwargs):
         return Series(**data)
