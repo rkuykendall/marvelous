@@ -1,5 +1,7 @@
 import itertools
 
+from marshmallow import ValidationError
+
 from . import comic, exceptions
 
 
@@ -10,11 +12,12 @@ class ComicsList():
 
         schema = comic.ComicSchema()
         for comic_dict in response['data']['results']:
-            result = schema.load(comic_dict)
-            if len(result.errors) > 0:
-                raise exceptions.ApiError(result.errors)
+            try:
+                result = schema.load(comic_dict)
+            except ValidationError as error:
+                raise exceptions.ApiError(error)
 
-            self.comics.append(result.data)
+            self.comics.append(result)
 
     def __iter__(self):
         return iter(self.comics)

@@ -5,6 +5,8 @@ import urllib.parse
 
 from collections import OrderedDict
 
+from marshmallow import ValidationError
+
 from . import exceptions, comics_list, series
 
 
@@ -77,10 +79,10 @@ class Session():
             self.call(['comics'], params=params))
 
     def series(self, _id):
-        result = series.SeriesSchema().load(self.call(['series', _id]))
+        try:
+            result = series.SeriesSchema().load(self.call(['series', _id]))
+        except ValidationError as error:
+            raise exceptions.ApiError(error)
 
-        if len(result.errors) > 0:
-            raise exceptions.ApiError(result.errors)
-
-        result.data.session = self
-        return result.data
+        result.session = self
+        return result
