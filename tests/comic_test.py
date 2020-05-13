@@ -38,6 +38,10 @@ class TestComics(unittest.TestCase):
         self.assertTrue(af15.page_count == 36)
         self.assertTrue(af15.id == 16926)
 
+    def test_invalid_isbn(self):
+        """Sometimes Marvel API sends number for isbn"""
+        murpg = self.m.comics({'id': 1143}).comics[0]
+        self.assertEqual(murpg.isbn, '785110283')
 
 if __name__ == '__main__':
     unittest.main()

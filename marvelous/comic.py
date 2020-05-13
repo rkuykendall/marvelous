@@ -62,6 +62,9 @@ class ComicSchema(Schema):
                 for img in new_data['images']
             ]
 
+        if 'isbn' in new_data:
+            new_data['isbn'] = str(new_data['isbn'])
+
         return new_data
 
     @post_load
