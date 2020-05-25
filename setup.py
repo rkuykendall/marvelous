@@ -1,6 +1,6 @@
 from setuptools import setup, find_packages
 
-version = '1.0.4'
+version = '1.1.1'
 
 setup(
     author_email='robert@rkuykendall.com',

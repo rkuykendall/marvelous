@@ -54,3 +54,10 @@ Contributing
 - When running a new test for the first time, set the environment variables
   ``PUBLIC_KEY`` and ``PRIVATE_KEY`` to any Marel API keys. The result will be
   stored in the `tests/testing_mock.sqlite` database without your keys.
+
+
+**To release:**
+
+- Update version number
+- Create tag on Github
+- Wait for Travis to publish
