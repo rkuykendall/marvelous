@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
-from . import exceptions, series, comic, events
+from . import exceptions, series, events
 
 
 class Creator:
