@@ -1,6 +1,6 @@
 from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
-from . import dates, series, urls, events
+from . import dates, series, urls, events, creator
 
 
 class Comic():
@@ -35,7 +35,7 @@ class ComicSchema(Schema):
     # prices
     # thumbnail
     images = fields.List(fields.Url)
-    # creators
+    creators = fields.Nested(creator.CreatorsSchema, many=True)
     # characters
     # stories
     events = fields.Nested(events.EventsSchema, many=True)
@@ -55,6 +55,9 @@ class ComicSchema(Schema):
 
         if 'events' in new_data:
             new_data['events'] = new_data['events']['items']
+
+        if 'creators' in new_data:
+            new_data['creators'] = new_data['creators']['items']
 
         if 'images' in new_data:
             new_data['images'] = [
