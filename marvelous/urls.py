@@ -23,11 +23,7 @@ class UrlsSchema(Schema):
 
     @pre_load
     def process_input(self, data, **kwargs):
-        new_data = {}
-        for d in data:
-            new_data[d['type']] = d['url']
-
-        return new_data
+        return {d['type']: d['url'] for d in data}
 
     @post_load
     def make(self, data, **kwargs):
