@@ -5,13 +5,13 @@ from marshmallow import ValidationError
 from . import comic, exceptions
 
 
-class ComicsList():
+class ComicsList:
     def __init__(self, response):
         self.comics = []
         self.response = response
 
         schema = comic.ComicSchema()
-        for comic_dict in response['data']['results']:
+        for comic_dict in response["data"]["results"]:
             try:
                 result = schema.load(comic_dict)
             except ValidationError as error:
@@ -27,7 +27,8 @@ class ComicsList():
 
     def __getitem__(self, index):
         try:
-            return next(itertools.islice(self.comics, index, index+1))
+            return next(itertools.islice(self.comics, index, index + 1))
         except TypeError:
-            return list(itertools.islice(
-                self.comics, index.start, index.stop, index.step))
+            return list(
+                itertools.islice(self.comics, index.start, index.stop, index.step)
+            )

@@ -2,16 +2,16 @@ import itertools
 
 from marshmallow import ValidationError
 
-from . import exceptions, creator
+from . import creator, exceptions
 
 
-class CreatorsList():
+class CreatorsList:
     def __init__(self, response):
         self.creator = []
         self.response = response
 
         schema = creator.CreatorsSchema()
-        for series_dict in response['data']['results']:
+        for series_dict in response["data"]["results"]:
             try:
                 result = schema.load(series_dict)
             except ValidationError as error:
@@ -29,5 +29,6 @@ class CreatorsList():
         try:
             return next(itertools.islice(self.creator, index, index + 1))
         except TypeError:
-            return list(itertools.islice(
-                self.creator, index.start, index.stop, index.step))
+            return list(
+                itertools.islice(self.creator, index.start, index.stop, index.step)
+            )

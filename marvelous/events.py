@@ -1,7 +1,7 @@
-from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
+from marshmallow import INCLUDE, Schema, fields, post_load, pre_load
 
 
-class Events():
+class Events:
     def __init__(self, id=None, name=None, **kwargs):
         self.id = id
         self.name = name
@@ -17,7 +17,7 @@ class EventsSchema(Schema):
 
     @pre_load
     def process_input(self, data, **kwargs):
-        data['id'] = data['resourceURI'].split('/')[-1]
+        data["id"] = data["resourceURI"].split("/")[-1]
         return data
 
     @post_load

@@ -1,16 +1,16 @@
-from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
+from marshmallow import INCLUDE, Schema, fields, post_load, pre_load
 
-from . import exceptions, series, events
+from . import events, exceptions, series
 
 
 class Creator:
     def __init__(self, **kwargs):
-        if 'response' not in kwargs:
-            kwargs['response'] = None
+        if "response" not in kwargs:
+            kwargs["response"] = None
 
         for k, v in kwargs.items():
             setattr(self, k, v)
-        
+
     # TODO: Retrieve comics list for creator
 
 
@@ -22,7 +22,7 @@ class CreatorsSchema(Schema):
     suffix = fields.Str()
     fullName = fields.Str(attribute="full_name")
     modified = fields.DateTime()
-    resourceURI = fields.Str(attribute='resource_uri')
+    resourceURI = fields.Str(attribute="resource_uri")
     # urls
     thumbnail = fields.Url()
     series = fields.Nested(series.SeriesSchema, many=True)
@@ -34,23 +34,25 @@ class CreatorsSchema(Schema):
 
     @pre_load
     def process_input(self, data, **kwargs):
-        if data.get('code', 200) != 200:
-            raise exceptions.ApiError(data.get('status'))
+        if data.get("code", 200) != 200:
+            raise exceptions.ApiError(data.get("status"))
 
-        if 'status' in data:
-            data['data']['results'][0]['response'] = data
-            data = data['data']['results'][0]
+        if "status" in data:
+            data["data"]["results"][0]["response"] = data
+            data = data["data"]["results"][0]
 
-        if 'thumbnail' in data:
-            data['thumbnail'] = f"{data['thumbnail']['path']}.{data['thumbnail']['extension']}"
-            
-        if 'events' in data:
-            data['events'] = data['events']['items']
+        if "thumbnail" in data:
+            data[
+                "thumbnail"
+            ] = f"{data['thumbnail']['path']}.{data['thumbnail']['extension']}"
 
-        if 'series' in data:
-            data['series'] = data['series']['items']
+        if "events" in data:
+            data["events"] = data["events"]["items"]
 
-        data['id'] = data['resourceURI'].split('/')[-1]
+        if "series" in data:
+            data["series"] = data["series"]["items"]
+
+        data["id"] = data["resourceURI"].split("/")[-1]
         return data
 
     @post_load

@@ -19,6 +19,6 @@ class SqliteCache:
 
     def store(self, key, value):
         self.cur.execute(
-            "INSERT INTO responses(key, json) VALUES(?, ?)",
-            (key, json.dumps(value)))
+            "INSERT INTO responses(key, json) VALUES(?, ?)", (key, json.dumps(value))
+        )
         self.con.commit()
