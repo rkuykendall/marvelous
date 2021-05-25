@@ -37,6 +37,10 @@ class TestComics(unittest.TestCase):
         self.assertTrue(af15.format == "Comic")
         self.assertTrue(af15.page_count == 36)
         self.assertTrue(af15.id == 16926)
+        self.assertTrue("Spider-Man" in [c.name for c in af15.characters])
+        self.assertFalse("Foo" in [c.name for c in af15.characters])
+        self.assertTrue("Steve Ditko" in [s.name for s in af15.creators])
+        self.assertFalse("Abe Lincoln" in [s.name for s in af15.creators])
 
     def test_invalid_isbn(self):
         """Sometimes Marvel API sends number for isbn"""

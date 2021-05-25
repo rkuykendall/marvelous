@@ -1,33 +1,27 @@
 from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
 
-from . import exceptions, series, events
+from . import exceptions, series, urls, events
 
-
-class Creator:
+class Character:
     def __init__(self, **kwargs):
         if 'response' not in kwargs:
             kwargs['response'] = None
 
         for k, v in kwargs.items():
             setattr(self, k, v)
-        
-    # TODO: Retrieve comics list for creator
 
-
-class CreatorsSchema(Schema):
+class CharactersSchema(Schema):
     id = fields.Int()
-    firstName = fields.Str(attribute="first_name")
-    middleName = fields.Str(attribute="middle_name")
-    lastName = fields.Str(attribute="last_name")
-    suffix = fields.Str()
-    fullName = fields.Str(attribute="full_name")
+    name = fields.Str()
+    description = fields.Str()
     modified = fields.DateTime()
     resourceURI = fields.Str(attribute='resource_uri')
-    # urls
+    urls = fields.Nested(urls.UrlsSchema)
     thumbnail = fields.Url()
-    series = fields.Nested(series.SeriesSchema, many=True)
+    # comics
     # stories
     events = fields.Nested(events.EventsSchema, many=True)
+    series = fields.Nested(series.SeriesSchema, many=True)
 
     class Meta:
         unknown = INCLUDE
@@ -55,4 +49,4 @@ class CreatorsSchema(Schema):
 
     @post_load
     def make(self, data, **kwargs):
-        return Creator(**data)
+        return Character(**data)

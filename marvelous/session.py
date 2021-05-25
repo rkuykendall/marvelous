@@ -7,7 +7,7 @@ from collections import OrderedDict
 
 from marshmallow import ValidationError
 
-from . import exceptions, comics_list, series, series_list, creator, creators_list
+from . import exceptions, comics_list, series, series_list, creator, creators_list, character, characters_list
 
 
 class Session():
@@ -109,3 +109,19 @@ class Session():
 
         return creators_list.CreatorsList(
             self.call(['creators'], params=params))
+
+    def character(self, _id):
+        try:
+            result = character.CharactersSchema().load(self.call(['characters', _id]))
+        except ValidationError as error:
+            raise exceptions.ApiError(error)
+
+        result.session = self
+        return result
+
+    def characters_list(self, params=None):
+        if params is None:
+            params = {}
+
+        return characters_list.CharactersList(
+            self.call(['characters'], params=params))
