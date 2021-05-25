@@ -1,12 +1,12 @@
-from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
+from marshmallow import INCLUDE, Schema, fields, post_load, pre_load
 
 from . import exceptions
 
 
 class Series:
     def __init__(self, **kwargs):
-        if 'response' not in kwargs:
-            kwargs['response'] = None
+        if "response" not in kwargs:
+            kwargs["response"] = None
 
         for k, v in kwargs.items():
             if k == "comics":
@@ -20,13 +20,14 @@ class Series:
             params = {}
 
         return comics_list.ComicsList(
-            self.session.call(['series', self.id, 'comics'], params=params))
+            self.session.call(["series", self.id, "comics"], params=params)
+        )
 
 
 class SeriesSchema(Schema):
     response = fields.Raw()
     id = fields.Int()
-    resourceURI = fields.Str(attribute='resource_uri')
+    resourceURI = fields.Str(attribute="resource_uri")
     title = fields.Str()
 
     class Meta:
@@ -34,14 +35,14 @@ class SeriesSchema(Schema):
 
     @pre_load
     def process_input(self, data, **kwargs):
-        if data.get('code', 200) != 200:
-            raise exceptions.ApiError(data.get('status'))
+        if data.get("code", 200) != 200:
+            raise exceptions.ApiError(data.get("status"))
 
-        if 'status' in data:
-            data['data']['results'][0]['response'] = data
-            data = data['data']['results'][0]
+        if "status" in data:
+            data["data"]["results"][0]["response"] = data
+            data = data["data"]["results"][0]
 
-        data['id'] = data['resourceURI'].split('/')[-1]
+        data["id"] = data["resourceURI"].split("/")[-1]
         return data
 
     @post_load

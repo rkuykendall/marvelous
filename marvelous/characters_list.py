@@ -2,16 +2,16 @@ import itertools
 
 from marshmallow import ValidationError
 
-from . import exceptions, character
+from . import character, exceptions
 
 
-class CharactersList():
+class CharactersList:
     def __init__(self, response):
         self.character = []
         self.response = response
 
         schema = character.CharactersSchema()
-        for character_dict in response['data']['results']:
+        for character_dict in response["data"]["results"]:
             try:
                 result = schema.load(character_dict)
             except ValidationError as error:
@@ -29,5 +29,6 @@ class CharactersList():
         try:
             return next(itertools.islice(self.character, index, index + 1))
         except TypeError:
-            return list(itertools.islice(
-                self.character, index.start, index.stop, index.step))
+            return list(
+                itertools.islice(self.character, index.start, index.stop, index.step)
+            )

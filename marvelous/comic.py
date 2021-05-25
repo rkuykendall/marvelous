@@ -1,9 +1,9 @@
-from marshmallow import Schema, fields, pre_load, post_load, INCLUDE
+from marshmallow import INCLUDE, Schema, fields, post_load, pre_load
 
-from . import dates, series, urls, events, creator, character
+from . import character, creator, dates, events, series, urls
 
 
-class Comic():
+class Comic:
     def __init__(self, **kwargs):
         for k, v in kwargs.items():
             setattr(self, k, v)
@@ -11,21 +11,21 @@ class Comic():
 
 class ComicSchema(Schema):
     id = fields.Int()
-    digitalId = fields.Int(attribute='digital_id')
+    digitalId = fields.Int(attribute="digital_id")
     title = fields.Str()
-    issueNumber = fields.Int(attribute='issue_number')
-    variantDescription = fields.Str(attribute='variant_description')
+    issueNumber = fields.Int(attribute="issue_number")
+    variantDescription = fields.Str(attribute="variant_description")
     description = fields.Str(allow_none=True)
     modified = fields.DateTime()
     isbn = fields.Str()
     up = fields.Str()
-    diamondCode = fields.Str(attribute='diamond_code')
+    diamondCode = fields.Str(attribute="diamond_code")
     ean = fields.Str()
     issn = fields.Str()
     format = fields.Str()
-    pageCount = fields.Int(attribute='page_count')
+    pageCount = fields.Int(attribute="page_count")
     # textObjects
-    resourceURI = fields.Url(attribute='resource_uri')
+    resourceURI = fields.Url(attribute="resource_uri")
     urls = fields.Nested(urls.UrlsSchema)
     series = fields.Nested(series.SeriesSchema)
     # variants
@@ -50,29 +50,29 @@ class ComicSchema(Schema):
         # Marvel comic 1768, and maybe others, returns a modified of
         # "-0001-11-30T00:00:00-0500". The best way to handle this is
         # probably just to ignore it, since I don't know how to fix it.
-        if new_data.get('modified', ' ')[0] == '-':
-            del new_data['modified']
+        if new_data.get("modified", " ")[0] == "-":
+            del new_data["modified"]
 
-        if 'events' in new_data:
-            new_data['events'] = new_data['events']['items']
+        if "events" in new_data:
+            new_data["events"] = new_data["events"]["items"]
 
-        if 'creators' in new_data:
-            new_data['creators'] = new_data['creators']['items']
+        if "creators" in new_data:
+            new_data["creators"] = new_data["creators"]["items"]
 
-        if 'characters' in new_data:
-            new_data['characters'] = new_data['characters']['items']
+        if "characters" in new_data:
+            new_data["characters"] = new_data["characters"]["items"]
 
-        if 'images' in new_data:
-            new_data['images'] = [
-                '{}.{}'.format(img['path'], img['extension'])
-                for img in new_data['images']
+        if "images" in new_data:
+            new_data["images"] = [
+                "{}.{}".format(img["path"], img["extension"])
+                for img in new_data["images"]
             ]
 
-        if 'isbn' in new_data:
-            new_data['isbn'] = str(new_data['isbn'])
+        if "isbn" in new_data:
+            new_data["isbn"] = str(new_data["isbn"])
 
-        if 'diamondCode' in new_data:
-            new_data['diamondCode'] = str(new_data['diamondCode'])
+        if "diamondCode" in new_data:
+            new_data["diamondCode"] = str(new_data["diamondCode"])
 
         return new_data
 
