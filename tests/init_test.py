@@ -24,7 +24,7 @@ class TestInit(unittest.TestCase):
         except Exception as exc:
             self.fail("marvelous.api() raised {} unexpectedly!".format(exc))
 
-        self.assertEqual(m.__class__.__name__, marvelous.session.Session.__name__)
+        self.assertEquals(m.__class__.__name__, marvelous.session.Session.__name__)
 
 
 if __name__ == "__main__":

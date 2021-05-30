@@ -47,7 +47,7 @@ class Session:
         params["apikey"] = self.public_key
         params["ts"] = now_string
 
-        url = self.api_url.format("/".join(str(e) for e in endpoint))
+        url = self.api_url.format("/".join([str(e) for e in endpoint]))
         cache_key = "{url}{cache_params}".format(url=url, cache_params=cache_params)
 
         if self.cache:
@@ -84,13 +84,29 @@ class Session:
 
         return comics_list.ComicsList(self.call(["comics"], params=params))
 
-    def series(self, _id):
-        try:
-            result = series.SeriesSchema().load(self.call(["series", _id]))
-        except ValidationError as error:
-            raise exceptions.ApiError(error)
+    def series(self, _id=None, params=None):
+        result = None
+        if _id:
+            try:
+                result = series.SeriesSchema().load(self.call(["series", _id]))
+                result.session = self
+            except ValidationError as error:
+                raise exceptions.ApiError(error)
+        elif params:
+            try:
+                api_call = self.call(["series"], params)
 
-        result.session = self
+                if api_call.get("code", 200) != 200:
+                    raise exceptions.ApiError(api_call.get("status"))
+
+                result = series.SeriesSchema().load(
+                    api_call.get("data", {}).get("results"), many=True
+                )
+                for r in result:
+                    r.session = self
+            except ValidationError as error:
+                raise exceptions.ApiError(error)
+
         return result
 
     def series_list(self, params=None):

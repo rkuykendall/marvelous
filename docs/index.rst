@@ -50,15 +50,15 @@ Marvelous Documentation
 Introduction
 ------------
 
-This package uses 2 major packages :
-
-- requests for connecting to the Marvel API
-- marshmallow for parsing the response into python objects
-
-marvelous was created to make it easy to write small but power scripts which
+Marvelous was created to make it easy to write small but powerful scripts which
 leverage the Marvel API, such as reading lists. The original use was to
 automate a list of Marvel comics weekly releases without having to copy each
 title manually from the Midtown Comics website.
+
+This package uses 2 major libraries :
+
+- requests for connecting to the Marvel API
+- marshmallow for parsing the response into python objects
 
 
 Instantiating API
@@ -115,31 +115,28 @@ m.comics(params=None)
 .....................
 
 Calls the `/v1/public/comics` endpoint with any params passed in and
-returns a `ComicList` object. For documentation on `ComicList`, see below. For
-documentation on all the params argument, see the
-`Marvel API documentation <https://developer.marvel.com/docs#!/public/getComicsCollection_get_6>`_
+returns a `ComicList` object. For documentation on `ComicList`, see below.
+For documentation on all the acceptable keys in `params`, see the
+`Marvel API documentation for /comics <https://developer.marvel.com/docs#!/public/getComicsCollection_get_6>`_
 
 
-m.series(series_id)
-...................
+m.series(series_id=None, params=None)
+.....................................
 
-Calls the `/v1/public/series/{seriesId}` endpoint with the first
-argument and returns a `Series` object.
+If `series_id` is present, it returns a single `Series` object
+(i.e. `/v1/public/series/{series_id}`).
 
-m.series_list(params=None)
-.....................
+If `params` is present, it returns a list of `Series` objects that match the
+passed parameters (i.e. `/v1/public/series?someparam=somevalue...`).
 
-Calls the `/v1/public/series` endpoint with any params passed in and
-returns a `SeriesList` object. For documentation on `SeriesList`, see below. For
-documentation on all the params argument, see the
-`Marvel API documentation <https://developer.marvel.com/docs#!/public/getSeriesCollection_get_25>`_
-
+For documentation on all the acceptable keys in `params`, see the
+`Marvel API documentation for /series <https://developer.marvel.com/docs#!/public/getSeriesCollection_get_25>`_
 
 Objects
 -------
 
 Aside from making it easier to build and send requests, marvelous also creates
-east to work with python objects from the response.
+easy-to-work-with python objects from the response.
 
 
 Comic
@@ -195,6 +192,11 @@ Series
 - ``resource_uri`` - String, `resourceURI` from API
 - ``title`` - String
 - ``comics`` - Method, Returns ``ComicsList`` object for `/v1/public/series/{seriesId}/comics`
+- ``thumbnail`` - String url pointing to Marvel-provided thumbnail
+- ``startYear`` - Int
+- ``endYear`` - Int
+- ``rating`` - Str
+- ``modified`` - datetime (tz-aware)
 
 
 SeriesList
@@ -226,7 +228,7 @@ argument must be an object with these two methods:
 - ``store(self, key, value):``
 
 Anything else is up to the user. A cache could be implemented as a simple
-attribute in memoru or with the help of a database, redis, an API, files, or
+attribute in memory or with the help of a database, redis, an API, files, or
 anything else.
 
 An Sqlite cache class is included with the library and can be imported like so:
