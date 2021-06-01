@@ -29,6 +29,12 @@ class SeriesSchema(Schema):
     id = fields.Int()
     resourceURI = fields.Str(attribute="resource_uri")
     title = fields.Str()
+    modified = fields.DateTime()
+    description = fields.Str(allow_none=True)
+    thumbnail = fields.URL(allow_none=True)
+    startYear = fields.Int(allow_none=True)
+    endYear = fields.Int(allow_none=True)
+    rating = fields.Str(allow_none=True)
 
     class Meta:
         unknown = INCLUDE
@@ -42,7 +48,14 @@ class SeriesSchema(Schema):
             data["data"]["results"][0]["response"] = data
             data = data["data"]["results"][0]
 
+        # derive ID
         data["id"] = data["resourceURI"].split("/")[-1]
+        # derive thumbnail
+        thumb_dict = data.get("thumbnail", {})
+        if thumb_dict:
+            data["thumbnail"] = f"{thumb_dict['path']}.{thumb_dict['extension']}"
+        else:
+            data["thumbnail"] = None
         return data
 
     @post_load

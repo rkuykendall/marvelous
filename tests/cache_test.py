@@ -1,9 +1,9 @@
 import json
 import os
+import requests_mock
 import unittest
 
 import marvelous
-import requests_mock
 
 
 class NoGet:
