@@ -53,7 +53,7 @@ class SeriesSchema(Schema):
         # derive thumbnail
         thumb_dict = data.get("thumbnail", {})
         if thumb_dict:
-            data["thumbnail"] = ".".join([thumb_dict["path"], thumb_dict["extension"]])
+            data["thumbnail"] = f"{thumb_dict['path']}.{thumb_dict['extension']}"
         else:
             data["thumbnail"] = None
         return data
