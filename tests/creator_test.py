@@ -39,8 +39,11 @@ class TestCreators(unittest.TestCase):
                 "orderBy": "modified",
             }
         )
-
-        self.assertGreater(len(creators.creator), 0)
+        c_iter = iter(creators)
+        self.assertEqual(next(c_iter).full_name, "Sean Cooke")
+        self.assertEqual(next(c_iter).full_name, "Mark Shultz")
+        self.assertEqual(next(c_iter).full_name, "Miles Lane")
+        self.assertGreater(len(creators), 0)
 
 
 if __name__ == "__main__":

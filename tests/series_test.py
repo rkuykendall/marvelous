@@ -85,6 +85,14 @@ class TestSeries(unittest.TestCase):
             self.assertIsInstance(series, Series)
             self.assertEqual(startYear, series.startYear)
 
+    def test_pulls_verbose(self):
+        series = self.m.series_list()
+        s_iter = iter(series)
+        self.assertEqual(next(s_iter).id, 31445)
+        self.assertEqual(next(s_iter).id, 26024)
+        self.assertEqual(next(s_iter).id, 18454)
+        self.assertGreater(len(series), 0)
+
 
 if __name__ == "__main__":
     unittest.main()
