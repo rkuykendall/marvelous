@@ -23,8 +23,11 @@ class TestComics(unittest.TestCase):
                 "dateDescriptor": "thisWeek",
             }
         )
-
-        self.assertTrue(len(week.comics) > 0)
+        c_iter = iter(week)
+        self.assertEqual(next(c_iter).id, 61656)
+        self.assertEqual(next(c_iter).id, 63866)
+        self.assertEqual(next(c_iter).id, 60956)
+        self.assertTrue(len(week) > 0)
 
     def test_pulls_simple(self):
         week = self.m.comics({"dateDescriptor": "thisWeek"})

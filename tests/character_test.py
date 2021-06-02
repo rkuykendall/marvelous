@@ -37,5 +37,8 @@ class TestCharacters(unittest.TestCase):
                 "orderBy": "modified",
             }
         )
-
-        self.assertGreater(len(characters.character), 0)
+        c_iter = iter(characters)
+        self.assertEqual(next(c_iter).name, "Askew-Tronics")
+        self.assertEqual(next(c_iter).name, "Cargill")
+        self.assertEqual(next(c_iter).name, "Firebrand")
+        self.assertGreater(len(characters), 0)
