@@ -49,11 +49,13 @@ class TestComics(unittest.TestCase):
         self.assertFalse("Foo" in [c.name for c in af15.characters])
         self.assertTrue("Steve Ditko" in [s.name for s in af15.creators])
         self.assertFalse("Abe Lincoln" in [s.name for s in af15.creators])
+        self.assertEqual(af15.prices.print, 0.1)
 
     def test_invalid_isbn(self):
         """Sometimes Marvel API sends number for isbn"""
         murpg = self.m.comics({"id": 1143}).comics[0]
         self.assertEqual(murpg.isbn, "785110283")
+        self.assertEqual(murpg.prices.print, 9.99)
 
     def test_invalid_diamond_code(self):
         """Sometimes Marvel API sends number for diamond code"""
