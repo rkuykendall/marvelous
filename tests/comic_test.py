@@ -60,6 +60,10 @@ class TestComics(unittest.TestCase):
         hulk = self.m.comics({"id": 27399}).comics[0]
         self.assertEqual(hulk.diamond_code, "0")
 
+    def test_upc_code(self):
+        cable = self.m.comics({"id": 95781}).comics[0]
+        self.assertEqual(cable.upc, "759606201991000111")
+
 
 if __name__ == "__main__":
     unittest.main()
