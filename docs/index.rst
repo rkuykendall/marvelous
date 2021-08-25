@@ -150,7 +150,7 @@ Comic
 - ``description`` - String
 - ``modified`` - Datetime
 - ``isbn`` - String
-- ``up`` - String
+- ``upc`` - String, UPC barcode
 - ``diamond_code`` - String, `diamondCode` from API
 - ``ean`` - String
 - ``issn`` - String
