@@ -32,6 +32,9 @@ black = "^21.8b0"
 requests-mock = "^1.9.3"
 flake8 = "^3.9.2"
 tox = "^3.24.3"
+pre-commit = "^2.14.1"
+isort = "^5.9.3"
+seed-isort-config = "^2.2.0"
 
 [build-system]
 requires = ["poetry-core>=1.0.0"]
@@ -40,6 +43,14 @@ build-backend = "poetry.core.masonry.api"
 [tool.black]
 line-length = 88
 target-version = ['py37']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+default_section = "THIRDPARTY"
+known_first_party = []
+known_third_party = ["marshmallow", "pytest", "requests", "requests_mock", "sphinx_rtd_theme"]
 
 [tool.poetry.urls]
 "Homepage" = "https://github.com/rkuykendall/marvelous"
