@@ -3,6 +3,7 @@ Test Init module.
 This module contains tests for project init.
 """
 import pytest
+
 from marvelous import api, exceptions, session
 
 

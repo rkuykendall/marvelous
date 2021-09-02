@@ -6,6 +6,7 @@ This module contains pytest fixtures.
 import os
 
 import pytest
+
 from marvelous import api, sqlite_cache
 
 

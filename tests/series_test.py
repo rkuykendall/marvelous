@@ -5,6 +5,7 @@ This module contains tests for Series objects.
 import datetime
 
 import pytest
+
 from marvelous import comics_list, exceptions
 from marvelous.series import Series
 

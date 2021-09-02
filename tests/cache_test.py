@@ -6,6 +6,7 @@ import json
 
 import pytest
 import requests_mock
+
 from marvelous import api, exceptions, sqlite_cache
 
 

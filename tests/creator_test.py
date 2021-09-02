@@ -4,6 +4,7 @@ This module contains tests for Creator objects.
 """
 
 import pytest
+
 from marvelous import exceptions
 
 
