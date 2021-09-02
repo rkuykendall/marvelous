@@ -32,8 +32,11 @@ def test_known_series(talker):
         == usms.modified
     )
     assert (
-        "In 2000, Marvel embarked on a bold new experiment, re-imagining some of their greatest heroes in the 21st century, beginning with Spider-Man! Writer Brian Michael Bendis along with artists Mark Bagley and Stuart Immonen invite you to discover the world of Peter Parker in a whole new way with the series that changed everything!"
-        == usms.description
+        "In 2000, Marvel embarked on a bold new experiment, re-imagining some "
+        "of their greatest heroes in the 21st century, beginning with Spider-Man! "
+        "Writer Brian Michael Bendis along with artists Mark Bagley and Stuart Immonen "
+        "invite you to discover the world of Peter Parker in a whole new way with the "
+        "series that changed everything!" == usms.description
     )
     assert "A" == usms.rating
 

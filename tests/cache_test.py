@@ -58,6 +58,7 @@ def test_sql_store(dummy_pubkey, dummy_privkey):
     except TypeError:
         print(
             "This test will fail after cache db deleted.\n"
-            "It should pass if you now re-run the test suite without deleting the database."
+            "It should pass if you now re-run the test suite "
+            "without deleting the database."
         )
         assert False
