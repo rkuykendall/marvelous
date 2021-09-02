@@ -1,44 +1,36 @@
-import os
-import unittest
+"""
+Test Characters module.
+This module contains tests for Character objects.
+"""
+import pytest
+from marvelous import exceptions
 
-from marvelous import SqliteCache, api, exceptions
+
+def test_known_character(talker):
+    cap = talker.character(1009220)
+    assert cap.name == "Captain America"
+    assert cap.resource_uri == "http://gateway.marvel.com/v1/public/characters/1009220"
+    assert (
+        cap.thumbnail == "http://i.annihil.us/u/prod/marvel/i/mg/3/50/537ba56d31087.jpg"
+    )
+    assert len(cap.series) > 0
+    assert len(cap.events) > 0
 
 
-class TestCharacters(unittest.TestCase):
-    def setUp(self):
-        pub = os.getenv("PUBLIC_KEY", "pub")
-        priv = os.getenv("PRIVATE_KEY", "priv")
-        self.m = api(
-            public_key=pub,
-            private_key=priv,
-            cache=SqliteCache("tests/testing_mock.sqlite"),
-        )
+def test_bad_character(talker):
+    with pytest.raises(exceptions.ApiError):
+        talker.character(-1)
 
-    def test_known_character(self):
-        cap = self.m.character(1009220)
-        self.assertTrue(cap.name == "Captain America")
-        self.assertTrue(
-            cap.resource_uri == "http://gateway.marvel.com/v1/public/characters/1009220"
-        )
-        self.assertTrue(
-            cap.thumbnail
-            == "http://i.annihil.us/u/prod/marvel/i/mg/3/50/537ba56d31087.jpg"
-        )
-        self.assertGreater(len(cap.series), 0)
-        self.assertGreater(len(cap.events), 0)
 
-    def test_bad_character(self):
-        with self.assertRaises(exceptions.ApiError):
-            self.m.character(-1)
+def test_pulls_verbose(talker):
+    characters = talker.characters_list(
+        {
+            "orderBy": "modified",
+        }
+    )
 
-    def test_pulls_verbose(self):
-        characters = self.m.characters_list(
-            {
-                "orderBy": "modified",
-            }
-        )
-        c_iter = iter(characters)
-        self.assertEqual(next(c_iter).name, "Askew-Tronics")
-        self.assertEqual(next(c_iter).name, "Cargill")
-        self.assertEqual(next(c_iter).name, "Firebrand")
-        self.assertGreater(len(characters), 0)
+    c_iter = iter(characters)
+    assert (next(c_iter).name) == "Askew-Tronics"
+    assert (next(c_iter).name) == "Cargill"
+    assert (next(c_iter).name) == "Firebrand"
+    assert len(characters) > 0
