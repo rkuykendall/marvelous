@@ -2,9 +2,9 @@
 name = "marvelous"
 version = "1.4.2"
 description = "Marvel API wrapper for python."
-authors = ["Robert Kuykendall <robert@rkuykendall.com"]
+authors = ["Robert Kuykendall <robert@rkuykendall.com>"]
 license = "MIT"
-maintainers = ["Robert Kuykendall <robert@rkuykendall.com"]
+maintainers = ["Robert Kuykendall <robert@rkuykendall.com>"]
 readme = "README.rst"
 packages = [
 	{ include = "marvelous" },
