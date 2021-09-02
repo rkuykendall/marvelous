@@ -25,6 +25,7 @@ classifiers=[
 python = "^3.7"
 marshmallow = "^3.13.0"
 requests = "^2.26.0"
+sphinx-rtd-theme = {version = "^0.5.2", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.12.1"
@@ -55,6 +56,9 @@ known_third_party = ["marshmallow", "pytest", "requests", "requests_mock", "sphi
 [tool.poetry.urls]
 "Homepage" = "https://github.com/rkuykendall/marvelous"
 "Bug Tracker" = "https://github.com/rkuykendall/marvelous/issues"
+
+[tool.poetry.extras]
+docs = ["sphinx-rtd-theme"]
 
 [tool.coverage.run]
 source = ["marvelous"]
