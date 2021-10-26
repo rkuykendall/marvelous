@@ -1,0 +1,69 @@
+[tool.poetry]
+name = "marvelous"
+version = "1.4.2"
+description = "Marvel API wrapper for python."
+authors = ["Robert Kuykendall <robert@rkuykendall.com>"]
+license = "MIT"
+maintainers = ["Robert Kuykendall <robert@rkuykendall.com>"]
+readme = "README.rst"
+packages = [
+	{ include = "marvelous" },
+]
+include = [
+    { path = "tests", format = "sdist" }
+]
+classifiers=[
+    "Intended Audience :: Developers",
+    "Natural Language :: English",
+    "Operating System :: OS Independent",
+    "Programming Language :: Python :: 3.7",
+    "Programming Language :: Python :: 3.8",
+    "Programming Language :: Python :: 3.9",
+    "Programming Language :: Python",
+    "Topic :: Utilities",
+]
+
+[tool.poetry.dependencies]
+python = "^3.7"
+marshmallow = "^3.13.0"
+requests = "^2.26.0"
+sphinx-rtd-theme = {version = "^0.5.2", optional = true}
+
+[tool.poetry.dev-dependencies]
+pytest-cov = "^2.12.1"
+black = "^21.8b0"
+requests-mock = "^1.9.3"
+flake8 = "^3.9.2"
+tox = "^3.24.3"
+pre-commit = "^2.14.1"
+isort = "^5.9.3"
+seed-isort-config = "^2.2.0"
+
+[build-system]
+requires = ["poetry-core>=1.0.0"]
+build-backend = "poetry.core.masonry.api"
+
+[tool.black]
+line-length = 88
+target-version = ['py37']
+
+[tool.isort]
+profile = "black"
+multi_line_output = 3
+line_length = 88
+default_section = "THIRDPARTY"
+known_first_party = []
+known_third_party = ["marshmallow", "pytest", "requests", "requests_mock", "sphinx_rtd_theme"]
+
+[tool.poetry.urls]
+"Homepage" = "https://github.com/rkuykendall/marvelous"
+"Bug Tracker" = "https://github.com/rkuykendall/marvelous/issues"
+
+[tool.poetry.extras]
+docs = ["sphinx-rtd-theme"]
+
+[tool.coverage.run]
+source = ["marvelous"]
+
+[tool.coverage.report]
+show_missing = true

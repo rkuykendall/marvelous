@@ -1,31 +1,26 @@
-import unittest
+"""
+Test Init module.
+This module contains tests for project init.
+"""
+import pytest
 
-import marvelous
-from marvelous.exceptions import AuthenticationError
-
-
-class TestInit(unittest.TestCase):
-    def setUp(self):
-        pass
-
-    def test_api(self):
-        with self.assertRaises(AuthenticationError):
-            marvelous.api()
-
-        with self.assertRaises(AuthenticationError):
-            marvelous.api(private_key="Something")
-
-        with self.assertRaises(AuthenticationError):
-            marvelous.api(public_key="Something")
-
-        m = None
-        try:
-            m = marvelous.api(public_key="Something", private_key="Else")
-        except Exception as exc:
-            self.fail("marvelous.api() raised {} unexpectedly!".format(exc))
-
-        self.assertEqual(m.__class__.__name__, marvelous.session.Session.__name__)
+from marvelous import api, exceptions, session
 
 
-if __name__ == "__main__":
-    unittest.main()
+def test_api():
+    with pytest.raises(exceptions.AuthenticationError):
+        api()
+
+    with pytest.raises(exceptions.AuthenticationError):
+        api(private_key="Something")
+
+    with pytest.raises(exceptions.AuthenticationError):
+        api(public_key="Something")
+
+    m = None
+    try:
+        m = api(public_key="Something", private_key="Else")
+    except Exception as exc:
+        print("mokkari.api() raised {} unexpectedly!".format(exc))
+
+    assert m.__class__.__name__, session.Session.__name__

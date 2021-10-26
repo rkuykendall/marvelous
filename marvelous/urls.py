@@ -10,7 +10,7 @@ class Urls:
         unlimited_date=None,
         wiki=None,
         detail=None,
-        **kwargs
+        **kwargs,
     ):
         self.digital_purchase_date = digital_purchase_date
         self.foc_date = foc_date
