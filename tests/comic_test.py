@@ -58,6 +58,12 @@ def test_invalid_diamond_code(talker):
     assert hulk.diamond_code == "0"
 
 
+def test_invalid_ean(talker):
+    """Sometimes Marvel API sends number for ean"""
+    hulk = talker.comics({"id": 17826}).comics[0]
+    assert hulk.ean == "0"
+
+
 def test_upc_code(talker):
     cable = talker.comics({"id": 95781}).comics[0]
     assert cable.upc == "759606201991000111"
