@@ -74,6 +74,9 @@ class ComicSchema(Schema):
         if "diamondCode" in new_data:
             new_data["diamondCode"] = str(new_data["diamondCode"])
 
+        if "ean" in new_data:
+            new_data["ean"] = str(new_data["ean"])
+
         return new_data
 
     @post_load
