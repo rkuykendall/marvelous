@@ -57,11 +57,11 @@ jobs:
       - name: Upload coverage to Codecov
         uses: codecov/codecov-action@v4
         with:
-          directory: ./coverage/reports/
-          env_vars: OS,PYTHON
           fail_ci_if_error: true
           files: ./coverage.xml
           flags: unittests
           name: codecov-umbrella
-          path_to_write_report: ./coverage/codecov_report.txt
           verbose: true
+          directory: ./coverage/reports/
+          env_vars: OS,PYTHON
+          token: ${{ secrets.CODECOV_TOKEN }}
