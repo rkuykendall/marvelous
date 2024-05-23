@@ -1,6 +1,6 @@
 [tool.poetry]
 name = "marvelous"
-version = "1.4.3"
+version = "1.4.4"
 description = "Marvel API wrapper for python."
 authors = ["Robert Kuykendall <robert@rkuykendall.com>"]
 license = "MIT"
