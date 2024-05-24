@@ -22,7 +22,6 @@ class Session:
     api_url = "http://gateway.marvel.com:80/v1/public/{}"
 
     def __init__(self, public_key, private_key, cache=None):
-
         self.public_key = public_key
         self.private_key = private_key
         self.cache = cache
