@@ -31,7 +31,7 @@ sphinx-rtd-theme = {version = "^0.5.2", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.12.1"
-black = "^21.8b0"
+black = "^23.3"
 requests-mock = "^1.9.3"
 flake8 = "^5.0.4"
 tox = "^3.24.3"
