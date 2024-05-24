@@ -35,7 +35,7 @@ black = "^23.3"
 requests-mock = "^1.9.3"
 flake8 = "^5.0.4"
 tox = "^3.24.3"
-pre-commit = "^2.14.1"
+pre-commit = "^2.21.0"
 isort = "^5.11.5"
 seed-isort-config = "^2.2.0"
 
