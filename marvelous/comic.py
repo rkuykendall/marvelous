@@ -77,6 +77,9 @@ class ComicSchema(Schema):
         if "ean" in new_data:
             new_data["ean"] = str(new_data["ean"])
 
+        if "issn" in new_data:
+            new_data["issn"] = str(new_data["issn"])
+
         return new_data
 
     @post_load
