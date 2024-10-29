@@ -64,6 +64,12 @@ def test_invalid_ean(talker):
     assert hulk.ean == "0"
 
 
+def test_invalid_issn(talker):
+    """Sometimes Marvel API sends number for issn"""
+    buddies = talker.comics({"id": 114897}).comics[0]
+    assert buddies.issn == "0"
+
+
 def test_upc_code(talker):
     cable = talker.comics({"id": 95781}).comics[0]
     assert cable.upc == "759606201991000111"
