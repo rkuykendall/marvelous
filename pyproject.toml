@@ -27,7 +27,7 @@ classifiers=[
 python = "^3.7"
 marshmallow = "^3.13.0"
 requests = "^2.26.0"
-sphinx-rtd-theme = {version = "^0.5.2", optional = true}
+sphinx-rtd-theme = {version = ">=0.5.2,<1.4.0", optional = true}
 
 [tool.poetry.dev-dependencies]
 pytest-cov = "^2.12.1"
